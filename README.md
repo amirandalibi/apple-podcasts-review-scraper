@@ -1,6 +1,10 @@
 # Apple Podcasts review scraper
 This is a simple Node.js script that scrapes reviews from multiple storefronts and return them in a single object.
 
+## Why did I make this?
+
+Apple doesn't aggregate reviews in one place and each country has its own database. This script is making multiple calls to an array of storefronts and return an aggregated list of reviews in a single view.
+Right now I only use the countries that my podcast is popular in 🙈 but you are welcome to add more.
 ## Dependencies
 - [Node.js](https://nodejs.org) 12.x
 - [Axios](https://github.com/axios/axios)
