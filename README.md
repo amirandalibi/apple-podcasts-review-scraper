@@ -1,4 +1,4 @@
-# apple-podcast-scrape-reviews
+# Apple Podcasts review scraper
 This is a simple Node.js script that scrapes reviews from multiple storefronts and return them in a single object.
 
 ## Dependencies

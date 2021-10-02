@@ -1,5 +1,5 @@
 {
-  "name": "apple-podcast-scrape-reviews",
+  "name": "apple-podcasts-review-scraper",
   "version": "0.0.1",
   "description": "Scrape Apple podcasts review from given storefronts",
   "main": "index.js",
