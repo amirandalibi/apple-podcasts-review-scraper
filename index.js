@@ -16,8 +16,8 @@ const server = http.createServer(async (req, res) => {
 
     buffer += body;
     i++;
-    if (i >= countries.length && html) {
-      res.write(html);
+    if (i >= countries.length && buffer) {
+      res.write(buffer);
       res.end();
     }
   });
@@ -27,6 +27,7 @@ server.listen(PORT, () => {
   console.log(`Server is running on: http://localhost:${PORT}`);
 });
 
+// TODO: add pagination for podcasts with more reviews
 async function get_podcast(id, store) {
   const url = `https://itunes.apple.com/${store.code}/rss/customerreviews/id=${id}/mostrecent/json`;
   const options = {
@@ -35,11 +36,12 @@ async function get_podcast(id, store) {
     }
   };
   const review_json = await fetch.get(url, options);
-  const entry = review_json.data.feed.entry;
+  const entry = review_json.data && review_json.data.feed.entry ?
+    review_json.data.feed.entry : [];
   
   return Array.isArray(entry) ? 
-  entry.map(e => podcast_review_object(e, store)) :
-  podcast_review_object(entry, store);
+    entry.map(e => podcast_review_object(e, store)) :
+    podcast_review_object(entry, store);
 };
 
 function podcast_review_object(e, c) {
