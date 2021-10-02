@@ -7,15 +7,14 @@ const PORT = 8000;
 const countries = require('./storefronts');
 
 const server = http.createServer(async (req, res) => {
-  res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
-
-  let html = '';
+  let buffer = '';
   let i = 0;
-    
+
+  res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
   countries.map(async (country) => {
     const body = await get_podcast(podcast_id, country);
 
-    html += body;
+    buffer += body;
     i++;
     if (i >= countries.length && html) {
       res.write(html);
@@ -37,6 +36,7 @@ async function get_podcast(id, store) {
   };
   const review_json = await fetch.get(url, options);
   const entry = review_json.data.feed.entry;
+  
   return Array.isArray(entry) ? 
   entry.map(e => podcast_review_object(e, store)) :
   podcast_review_object(entry, store);
