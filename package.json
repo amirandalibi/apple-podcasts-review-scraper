@@ -14,7 +14,12 @@
     "type": "git",
     "url": "git+https://github.com/amirandalibi/apple-podcast-scrape-reviews.git"
   },
-  "keywords": ["Apple", "Podcast", "Review", "Scrape"],
+  "keywords": [
+    "Apple",
+    "Podcast",
+    "Review",
+    "Scrape"
+  ],
   "author": "Amir Andalibi",
   "license": "ISC",
   "bugs": {
