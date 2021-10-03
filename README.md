@@ -13,6 +13,8 @@ Install the dependency first by running
 ```
 npm ci
 ```
+Replace the `podcast_id` with yours [here](https://github.com/amirandalibi/apple-podcasts-review-scraper/blob/9b042c6a16c15ebdbf6eab72639a1e3c53d1cd08/index.js#L3)
+
 Then run the script using
 
 ```
