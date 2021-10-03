@@ -52,6 +52,7 @@ function podcast_review_object(e, c) {
     ...(e.author && { 'author': e.author.name.label }),
     ...(e.title && { 'title': e.title.label }),
     ...(e.content && { 'content': e.content.label }),
-    ...(e['im:rating'] && { 'rating': e['im:rating'].label })
+    ...(e['im:rating'] && { 'rating': e['im:rating'].label }),
+    ...(e.updated && { 'updated': e.updated.label })
   })
 }
