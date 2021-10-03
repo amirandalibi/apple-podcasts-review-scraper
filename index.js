@@ -44,6 +44,8 @@ async function get_podcast(id, store) {
       res.setEncoding('utf8');
       res.on('data', (chunk) => {
         raw_data += chunk;
+      });
+      res.on('end', () => {
         const json = JSON.parse(raw_data);
         const entry = json && json.feed.entry || '';
         const result = entry && Array.isArray(entry) ? 
@@ -52,7 +54,6 @@ async function get_podcast(id, store) {
         
         resolve(result);
       });
-
     }).on('error', (e) => {
       reject(e.message);
     });
