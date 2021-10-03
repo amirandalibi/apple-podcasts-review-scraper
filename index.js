@@ -14,10 +14,10 @@ const server = http.createServer(async (req, res) => {
   countries.map(async (country) => {
     get_podcast(podcast_id, country)
       .then(buff => {
-        buffer += buff;
+        buffer += `,${buff}`;
         i++;
         if (i >= countries.length && buffer) {
-          const valid_json = buffer.replace('}{', '},{');
+          const valid_json = buffer.replace('}{', '},{').slice(1);
           
           res.write(`[${valid_json}]`);
           res.end();
