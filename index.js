@@ -1,7 +1,7 @@
 'use strict';
 
 const podcast_id = '1393804410'; // change this to your podcast ID
-const fetch = require('axios');
+const https = require('https');
 const http = require('http');
 const PORT = 8000;
 const countries = require('./storefronts');
@@ -12,16 +12,20 @@ const server = http.createServer(async (req, res) => {
 
   res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
   countries.map(async (country) => {
-    const body = await get_podcast(podcast_id, country);
-
-    buffer += body;
-    i++;
-    if (i >= countries.length && buffer) {
-      const valid_json = buffer.replace('}{', '},{');
-      
-      res.write(`[${valid_json}]`);
-      res.end();
-    }
+    get_podcast(podcast_id, country)
+      .then(buff => {
+        buffer += buff;
+        i++;
+        if (i >= countries.length && buffer) {
+          const valid_json = buffer.replace('}{', '},{');
+          
+          res.write(`[${valid_json}]`);
+          res.end();
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      });
   });
 });
 
@@ -32,18 +36,27 @@ server.listen(PORT, () => {
 // TODO: add pagination for podcasts with more reviews
 async function get_podcast(id, store) {
   const url = `https://itunes.apple.com/${store.code}/rss/customerreviews/id=${id}/mostrecent/json`;
-  const options = {
-    headers: {
-      'Content-Type': 'application/json; charset=utf-8'
-    }
-  };
-  const review_json = await fetch.get(url, options);
-  const entry = review_json.data && review_json.data.feed.entry ?
-    review_json.data.feed.entry : [];
-  
-  return Array.isArray(entry) ? 
-    entry.map(e => podcast_review_object(e, store)) :
-    podcast_review_object(entry, store);
+
+  return new Promise((resolve, reject) => {
+    https.get(url, (res) => {
+      let raw_data = '';
+
+      res.setEncoding('utf8');
+      res.on('data', (chunk) => {
+        raw_data += chunk;
+        const json = JSON.parse(raw_data);
+        const entry = json && json.feed.entry || '';
+        const result = entry && Array.isArray(entry) ? 
+          entry.map(e => podcast_review_object(e, store)) :
+          podcast_review_object(entry, store);
+        
+        resolve(result);
+      });
+
+    }).on('error', (e) => {
+      reject(e.message);
+    });
+  });
 };
 
 function podcast_review_object(e, c) {

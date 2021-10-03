@@ -3,10 +3,6 @@
   "version": "0.0.1",
   "description": "Scrape Apple podcasts review from given storefronts",
   "main": "index.js",
-  "dependencies": {
-    "axios": "^0.22.0"
-  },
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
