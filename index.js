@@ -10,14 +10,16 @@ const server = http.createServer(async (req, res) => {
   let buffer = '';
   let i = 0;
 
-  res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+  res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
   countries.map(async (country) => {
     const body = await get_podcast(podcast_id, country);
 
     buffer += body;
     i++;
     if (i >= countries.length && buffer) {
-      res.write(buffer);
+      const valid_json = buffer.replace('}{', '},{');
+      
+      res.write(`[${valid_json}]`);
       res.end();
     }
   });
