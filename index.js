@@ -7,19 +7,19 @@ const PORT = 8000;
 const countries = require('./storefronts');
 
 const server = http.createServer(async (req, res) => {
-  let buffer = '';
+  let buffer = [];
   let i = 0;
 
   res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
   countries.map(async (country) => {
     get_podcast(podcast_id, country)
       .then(buff => {
-        if (buff.length) buffer += `,${buff}`;
+        if (buff.length) buffer.push(buff);
+
         i++;
         if (i >= countries.length && buffer) {
-          const valid_json = buffer.replace('}{', '},{').slice(1);
-          
-          res.write(`[${valid_json}]`);
+
+          res.write(`[${buffer}]`); // flattening the array
           res.end();
         }
       })
