@@ -14,7 +14,7 @@ const server = http.createServer(async (req, res) => {
   countries.map(async (country) => {
     get_podcast(podcast_id, country)
       .then(buff => {
-        buffer += `,${buff}`;
+        if (buff.length) buffer += `,${buff}`;
         i++;
         if (i >= countries.length && buffer) {
           const valid_json = buffer.replace('}{', '},{').slice(1);
@@ -61,7 +61,7 @@ async function get_podcast(id, store) {
 };
 
 function podcast_review_object(e, c) {
-  return e && JSON.stringify({
+  return e && typeof e === 'object' && JSON.stringify({
     'country': c.name,
     ...(e.author && { 'author': e.author.name.label }),
     ...(e.title && { 'title': e.title.label }),
