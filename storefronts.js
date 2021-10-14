@@ -22,5 +22,37 @@ module.exports = [
   {
     'code': 'fr',
     'name': 'France'
+  },
+  {
+    'code': 'nl',
+    'name': 'Netherland'
+  },
+  {
+    'code': 'it',
+    'name': 'Italy'
+  },
+  {
+    'code': 'tr',
+    'name': 'Turkey'
+  },
+  {
+    'code': 'my',
+    'name': 'Malaysia'
+  },
+  {
+    'code': 'se',
+    'name': 'Sweden'
+  },
+  {
+    'code': 'at',
+    'name': 'Austria'
+  },
+  {
+    'code': 'br',
+    'name': 'Brazil'
+  },
+  {
+    'code': 'fi',
+    'name': 'Finland'
   }
 ];
